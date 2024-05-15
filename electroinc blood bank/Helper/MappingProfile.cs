@@ -29,6 +29,9 @@ namespace electroinc_blood_bank.Helper
             CreateMap<Blood, BloodDto>();
             CreateMap<BloodDto, Blood>();
 
+            CreateMap<BloodQuantity, BloodQuantityDto>();
+            CreateMap<BloodQuantityDto, BloodQuantity>();
+
         }
     }
 }
