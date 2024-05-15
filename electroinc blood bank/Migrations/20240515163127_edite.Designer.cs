@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using electroinc_blood_bank.Models;
 
@@ -11,9 +12,11 @@ using electroinc_blood_bank.Models;
 namespace electroinc_blood_bank.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240515163127_edite")]
+    partial class edite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,16 +241,13 @@ namespace electroinc_blood_bank.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<bool>("Avaliable")
-                        .HasColumnType("bit");
-
                     b.Property<int>("BloodAmount")
                         .HasColumnType("int");
 
                     b.Property<int>("BloodID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HospitalID")
+                    b.Property<int>("HospitalID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderAt")
@@ -257,15 +257,6 @@ namespace electroinc_blood_bank.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("orderFor")
-                        .HasColumnType("int");
-
-                    b.Property<int>("orderForID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("type")
                         .HasColumnType("int");
 
                     b.HasKey("id");
@@ -422,9 +413,11 @@ namespace electroinc_blood_bank.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("electroinc_blood_bank.Models.Hospital", null)
+                    b.HasOne("electroinc_blood_bank.Models.Hospital", "Hospital")
                         .WithMany("Orders")
-                        .HasForeignKey("HospitalID");
+                        .HasForeignKey("HospitalID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("electroinc_blood_bank.Models.Reciptionist", "Reciptionist")
                         .WithMany()
@@ -433,6 +426,8 @@ namespace electroinc_blood_bank.Migrations
                         .IsRequired();
 
                     b.Navigation("Blood");
+
+                    b.Navigation("Hospital");
 
                     b.Navigation("Reciptionist");
                 });

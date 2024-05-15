@@ -11,7 +11,6 @@
         public virtual BloodBank BloodBank { get; set; }    
         public int BloodID { get; set; }
         public virtual Blood Blood { get; set; }
-
         public int DonorID { get; set; }
         public virtual Donor Donor { get; set; }
 

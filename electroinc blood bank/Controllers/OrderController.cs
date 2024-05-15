@@ -61,8 +61,16 @@ namespace electroinc_blood_bank.Controllers
                 if (ModelState.IsValid)
                 {
                     var Order = _mapper.Map<Orders>(_OrderDto);
-                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == Order.BloodID).Select(e => e.quantity).FirstOrDefaultAsync();
-                    
+                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == Order.BloodID&&e.type==Order.type).Select(e => e.quantity).FirstOrDefaultAsync();
+
+                    if (Order.BloodAmount > AmountInBank)
+                    {
+                        Order.Avaliable=false;
+                    }
+                    else
+                    {
+                        Order.Avaliable=true;
+                    }
                     await _Conntext.Orders.AddAsync(Order);
                     await _Conntext.SaveChangesAsync();
                     return Ok(Order);

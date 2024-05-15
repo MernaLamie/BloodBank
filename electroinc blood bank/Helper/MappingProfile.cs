@@ -32,6 +32,9 @@ namespace electroinc_blood_bank.Helper
             CreateMap<BloodQuantity, BloodQuantityDto>();
             CreateMap<BloodQuantityDto, BloodQuantity>();
 
+
+            CreateMap<Reciptionist, ReciptionistDto>();
+            CreateMap<ReciptionistDto, Reciptionist>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace electroinc_blood_bank.Models
 
         [Required]
         [StringLength(11)]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public Guid Password { get; set; }  
         public int BloodBankId { get; set; }
