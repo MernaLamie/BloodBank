@@ -6,7 +6,10 @@ namespace electroinc_blood_bank.Models
     {
         public int ID { get; set; }
         [Required]
-        public string name { get; set; }
+        public string nameEn { get; set; }
+
+        [Required]
+        public string nameAr { get; set; }
 
         [Required]
         [StringLength(11)]

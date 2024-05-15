@@ -6,7 +6,7 @@ namespace electroinc_blood_bank.Models
     {
         public int ID {  get; set; }
        
-        public string type { get; set; }
+        public DonationType type { get; set; }
         public int quantity { get; set; } 
         public int BloodID { get; set; }
         public virtual Blood Blood { get; set; }

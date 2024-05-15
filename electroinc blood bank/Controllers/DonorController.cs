@@ -23,12 +23,22 @@ namespace electroinc_blood_bank.Controllers
         // GET: api/<DonorController>
         [HttpGet]
         [Route("GetAllDonors")]
-        public async Task<IActionResult> GetAllDonors()
+        public async Task<IActionResult> GetAllDonors(string? nameEn, string? nameAr)
         {
             try
             {
                 var DonorLst = await _Conntext.Donors.ToListAsync();
-                return Ok(_mapper.Map<List<Donor>>(DonorLst));
+                if (!string.IsNullOrEmpty(nameEn))
+                {
+                    DonorLst =DonorLst.Where(e => e.NameEn.Contains(nameEn)).ToList();
+                }
+                if (!string.IsNullOrEmpty(nameAr))
+                {
+                    DonorLst =DonorLst.Where(e => e.NameAr.Contains(nameAr)).ToList();
+                }
+              
+        
+                  return Ok(_mapper.Map<List<DonorDto>>(DonorLst));
             }
             catch (Exception ex)
             {
@@ -48,7 +58,7 @@ namespace electroinc_blood_bank.Controllers
             try
             {
                 var Donor = await _Conntext.Donors.FindAsync(id);
-                return Ok(_mapper.Map<Donor>(Donor));
+                return Ok(_mapper.Map<DonorDto>(Donor));
             }
             catch (Exception ex)
             {
@@ -76,11 +86,11 @@ namespace electroinc_blood_bank.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException);
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("PostNewDonation")]
         public async Task<IActionResult> Post([FromBody] DonorHistoryDto donorHistory)
         {
@@ -92,7 +102,11 @@ namespace electroinc_blood_bank.Controllers
                     await _Conntext.DonorsHistory.AddAsync(_donorHistory);
                     await _Conntext.SaveChangesAsync();
                   
-                    var IncreaceAvalabileQuantity = await _Conntext.BloodQuantities.Where(e => e.BloodID == _donorHistory.BloodID &&e.BloodBankID==_donorHistory.BloodBankID).FirstOrDefaultAsync();
+                    var IncreaceAvalabileQuantity = await _Conntext.BloodQuantities.Where(e => e.BloodID == _donorHistory.BloodID &&e.BloodBankID==_donorHistory.BloodBankID && e.type==_donorHistory.type).FirstOrDefaultAsync();
+                   if (IncreaceAvalabileQuantity == null)
+                    {
+                        IncreaceAvalabileQuantity = new BloodQuantity() { BloodBankID = donorHistory.BloodBankID, BloodID = donorHistory.BloodID, type = _donorHistory.type, quantity = 0 };
+                    }
                     IncreaceAvalabileQuantity.quantity += _donorHistory.DonationAmout;
                     _Conntext.BloodQuantities.Update(IncreaceAvalabileQuantity);
                     await _Conntext.SaveChangesAsync();
@@ -109,6 +123,22 @@ namespace electroinc_blood_bank.Controllers
             }
         }
 
+
+        // GET api/<DonorController>/5
+        [HttpGet]
+        [Route("DonorHistory")]
+        public async Task<IActionResult> GetDonorHistory(int id)
+        {
+            try
+            {
+                var Donor = await _Conntext.DonorsHistory.Where(e=>e.DonorID==id).ToListAsync();
+                return Ok(_mapper.Map<List<DonorHistoryDto>>(Donor));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 

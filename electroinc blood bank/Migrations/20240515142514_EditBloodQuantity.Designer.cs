@@ -12,8 +12,8 @@ using electroinc_blood_bank.Models;
 namespace electroinc_blood_bank.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231217113215_create")]
-    partial class create
+    [Migration("20240515142514_EditBloodQuantity")]
+    partial class EditBloodQuantity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,11 @@ namespace electroinc_blood_bank.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("BloodRh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BloodRhAr")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodRhEn")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -54,13 +56,17 @@ namespace electroinc_blood_bank.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("BloodBank");
+                    b.ToTable("BloodBanks");
                 });
 
             modelBuilder.Entity("electroinc_blood_bank.Models.BloodQuantity", b =>
@@ -80,9 +86,8 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("type")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -107,11 +112,14 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Gender")
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameAr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -135,20 +143,27 @@ namespace electroinc_blood_bank.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("BloodBankID")
+                        .HasColumnType("int");
+
                     b.Property<int>("BloodID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfDonation")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DonorID")
+                    b.Property<int>("DonationAmout")
                         .HasColumnType("int");
 
-                    b.Property<string>("type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DonorID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("type")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("BloodBankID");
 
                     b.HasIndex("BloodID");
 
@@ -169,14 +184,18 @@ namespace electroinc_blood_bank.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("ID");
 
@@ -194,7 +213,11 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<int>("BloodBankID")
                         .HasColumnType("int");
 
-                    b.Property<string>("name")
+                    b.Property<string>("nameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nameEn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -221,6 +244,9 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<int>("BloodAmount")
                         .HasColumnType("int");
 
+                    b.Property<int>("BloodID")
+                        .HasColumnType("int");
+
                     b.Property<int>("HospitalID")
                         .HasColumnType("int");
 
@@ -230,17 +256,56 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<int>("ReciptionistID")
                         .HasColumnType("int");
 
-                    b.Property<string>("bloodrh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
+
+                    b.HasIndex("BloodID");
 
                     b.HasIndex("HospitalID");
 
                     b.HasIndex("ReciptionistID");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("electroinc_blood_bank.Models.Patient", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("BloodID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameAr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BloodID");
+
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("electroinc_blood_bank.Models.Reciptionist", b =>
@@ -304,17 +369,29 @@ namespace electroinc_blood_bank.Migrations
 
             modelBuilder.Entity("electroinc_blood_bank.Models.DonorHistory", b =>
                 {
+                    b.HasOne("electroinc_blood_bank.Models.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("electroinc_blood_bank.Models.Blood", "Blood")
                         .WithMany()
                         .HasForeignKey("BloodID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("electroinc_blood_bank.Models.Donor", null)
+                    b.HasOne("electroinc_blood_bank.Models.Donor", "Donor")
                         .WithMany("History")
-                        .HasForeignKey("DonorID");
+                        .HasForeignKey("DonorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Blood");
+
+                    b.Navigation("BloodBank");
+
+                    b.Navigation("Donor");
                 });
 
             modelBuilder.Entity("electroinc_blood_bank.Models.Manager", b =>
@@ -330,6 +407,12 @@ namespace electroinc_blood_bank.Migrations
 
             modelBuilder.Entity("electroinc_blood_bank.Models.Orders", b =>
                 {
+                    b.HasOne("electroinc_blood_bank.Models.Blood", "Blood")
+                        .WithMany()
+                        .HasForeignKey("BloodID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("electroinc_blood_bank.Models.Hospital", "Hospital")
                         .WithMany("Orders")
                         .HasForeignKey("HospitalID")
@@ -342,9 +425,22 @@ namespace electroinc_blood_bank.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Blood");
+
                     b.Navigation("Hospital");
 
                     b.Navigation("Reciptionist");
+                });
+
+            modelBuilder.Entity("electroinc_blood_bank.Models.Patient", b =>
+                {
+                    b.HasOne("electroinc_blood_bank.Models.Blood", "Blood")
+                        .WithMany()
+                        .HasForeignKey("BloodID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blood");
                 });
 
             modelBuilder.Entity("electroinc_blood_bank.Models.Reciptionist", b =>

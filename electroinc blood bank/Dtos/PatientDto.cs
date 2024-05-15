@@ -6,7 +6,11 @@ namespace electroinc_blood_bank.Dtos
     {
         public int ID { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string NameEn { get; set; }
+
+        [Required]
+
+        public string NameAr { get; set; }
 
         [Required]
         public DateTime DateOfBirth { get; set; }

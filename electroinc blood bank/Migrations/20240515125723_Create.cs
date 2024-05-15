@@ -6,23 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace electroinc_blood_bank.Migrations
 {
     /// <inheritdoc />
-    public partial class create : Migration
+    public partial class Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BloodBank",
+                name: "BloodBanks",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BloodBank", x => x.ID);
+                    table.PrimaryKey("PK_BloodBanks", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -31,7 +32,8 @@ namespace electroinc_blood_bank.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BloodRh = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    BloodRhEn = table.Column<int>(type: "int", nullable: false),
+                    BloodRhAr = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +46,10 @@ namespace electroinc_blood_bank.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,7 +62,8 @@ namespace electroinc_blood_bank.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    nameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    nameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     BloodBankID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -67,9 +71,9 @@ namespace electroinc_blood_bank.Migrations
                 {
                     table.PrimaryKey("PK_Managers", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Managers_BloodBank_BloodBankID",
+                        name: "FK_Managers_BloodBanks_BloodBankID",
                         column: x => x.BloodBankID,
-                        principalTable: "BloodBank",
+                        principalTable: "BloodBanks",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -89,9 +93,9 @@ namespace electroinc_blood_bank.Migrations
                 {
                     table.PrimaryKey("PK_Reciptionists", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Reciptionists_BloodBank_BloodBankId",
+                        name: "FK_Reciptionists_BloodBanks_BloodBankId",
                         column: x => x.BloodBankId,
-                        principalTable: "BloodBank",
+                        principalTable: "BloodBanks",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -111,9 +115,9 @@ namespace electroinc_blood_bank.Migrations
                 {
                     table.PrimaryKey("PK_BloodQuantities", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_BloodQuantities_BloodBank_BloodBankID",
+                        name: "FK_BloodQuantities_BloodBanks_BloodBankID",
                         column: x => x.BloodBankID,
-                        principalTable: "BloodBank",
+                        principalTable: "BloodBanks",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -130,9 +134,10 @@ namespace electroinc_blood_bank.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     BloodID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -148,20 +153,51 @@ namespace electroinc_blood_bank.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    BloodID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Patients_Bloods_BloodID",
+                        column: x => x.BloodID,
+                        principalTable: "Bloods",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    bloodrh = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BloodAmount = table.Column<int>(type: "int", nullable: false),
                     OrderAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BloodID = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ReciptionistID = table.Column<int>(type: "int", nullable: false),
                     HospitalID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Bloods_BloodID",
+                        column: x => x.BloodID,
+                        principalTable: "Bloods",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Hospitals_HospitalID",
                         column: x => x.HospitalID,
@@ -184,12 +220,20 @@ namespace electroinc_blood_bank.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateOfDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DonationAmout = table.Column<int>(type: "int", nullable: false),
+                    BloodBankID = table.Column<int>(type: "int", nullable: false),
                     BloodID = table.Column<int>(type: "int", nullable: false),
                     DonorID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DonorsHistory", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DonorsHistory_BloodBanks_BloodBankID",
+                        column: x => x.BloodBankID,
+                        principalTable: "BloodBanks",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DonorsHistory_Bloods_BloodID",
                         column: x => x.BloodID,
@@ -219,6 +263,11 @@ namespace electroinc_blood_bank.Migrations
                 column: "BloodID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DonorsHistory_BloodBankID",
+                table: "DonorsHistory",
+                column: "BloodBankID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DonorsHistory_BloodID",
                 table: "DonorsHistory",
                 column: "BloodID");
@@ -234,6 +283,11 @@ namespace electroinc_blood_bank.Migrations
                 column: "BloodBankID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_BloodID",
+                table: "Orders",
+                column: "BloodID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_HospitalID",
                 table: "Orders",
                 column: "HospitalID");
@@ -242,6 +296,11 @@ namespace electroinc_blood_bank.Migrations
                 name: "IX_Orders_ReciptionistID",
                 table: "Orders",
                 column: "ReciptionistID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_BloodID",
+                table: "Patients",
+                column: "BloodID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reciptionists_BloodBankId",
@@ -265,6 +324,9 @@ namespace electroinc_blood_bank.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "Patients");
+
+            migrationBuilder.DropTable(
                 name: "Donors");
 
             migrationBuilder.DropTable(
@@ -277,7 +339,7 @@ namespace electroinc_blood_bank.Migrations
                 name: "Bloods");
 
             migrationBuilder.DropTable(
-                name: "BloodBank");
+                name: "BloodBanks");
         }
     }
 }

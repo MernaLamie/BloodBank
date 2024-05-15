@@ -6,7 +6,11 @@ namespace electroinc_blood_bank.Models
     {
         public int ID { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string NameEn { get; set; }
+
+
+        [Required]
+        public string NameAr { get; set; }
 
         [Required]
         public DateTime DateOfBirth { get; set; }
@@ -21,8 +25,11 @@ namespace electroinc_blood_bank.Models
         public int BloodID { get; set; }
         public virtual Blood blood { get; set; }
         public virtual List<DonorHistory> History { get; set; }
+       
+       
 
-        
+    
+
 
 
     }
@@ -30,7 +37,7 @@ namespace electroinc_blood_bank.Models
 
     public enum Gender
     {
-        Male=1,
-        Female=2
+        Male,
+        Female
     }
 }
