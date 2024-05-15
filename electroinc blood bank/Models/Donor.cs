@@ -12,7 +12,7 @@ namespace electroinc_blood_bank.Models
         public DateTime DateOfBirth { get; set; }
 
         [Required]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [Required]
         [StringLength(11)]
@@ -26,8 +26,7 @@ namespace electroinc_blood_bank.Models
 
 
     }
-
-
+   
 
     public enum Gender
     {

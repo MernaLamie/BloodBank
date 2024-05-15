@@ -11,10 +11,10 @@ namespace electroinc_blood_bank.Dtos
 
         public DateTime DateOfBirth { get; set; }
 
-       
-  //      public Sex Sex { get; set; }
 
-       
+        public Gender Gender { get; set; }
+
+
         public string Phone { get; set; }
 
     //    public BloodRh bloodRh { get; set; }

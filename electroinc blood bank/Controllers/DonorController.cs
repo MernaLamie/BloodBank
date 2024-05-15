@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace electroinc_blood_bank.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class DonorController : Controller
     {
         private readonly ApplicationDBContext _Conntext;
@@ -20,7 +22,8 @@ namespace electroinc_blood_bank.Controllers
 
         // GET: api/<DonorController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Route("GetAllDonors")]
+        public async Task<IActionResult> GetAllDonors()
         {
             try
             {
@@ -73,7 +76,7 @@ namespace electroinc_blood_bank.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException);
             }
         }
 
