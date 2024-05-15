@@ -125,5 +125,38 @@ namespace electroinc_blood_bank.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("GetBloodRh")]
+        public async Task<IActionResult> GetBloodRh()
+        {
+            try
+            {
+                var BloodQuantity = await _Conntext.Bloods.ToListAsync();
+                return Ok(BloodQuantity);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+            [HttpGet]
+        [Route("GetAvaliableBloodQuantity")]
+        public async Task<IActionResult> GetAvaliableBloodQuantity(int id)
+        {
+            try
+            {
+                var BloodQuantity = await _Conntext.BloodQuantities.Where(e=>e.BloodBankID==id).ToListAsync();
+                return Ok(_mapper.Map<List<BloodQuantityDto>>(BloodQuantity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
