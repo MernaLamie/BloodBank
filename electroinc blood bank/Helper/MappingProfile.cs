@@ -12,7 +12,7 @@ namespace electroinc_blood_bank.Helper
             CreateMap<BloodBank, BloodBankDto>();
 
             CreateMap<HospitalDto, Hospital>();
-            CreateMap<HospitalDto, Hospital>();
+            CreateMap<Hospital, HospitalDto>();
 
             CreateMap<OrderDto, Orders>();
             CreateMap<Orders, OrderDto>();
