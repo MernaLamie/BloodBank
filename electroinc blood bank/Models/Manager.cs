@@ -12,7 +12,7 @@ namespace electroinc_blood_bank.Models
         public string nameAr { get; set; }
 
         [Required]
-        [StringLength(11)]
+        [StringLength(13)]
         public string phone { get; set; }
 
         

@@ -8,6 +8,7 @@ namespace electroinc_blood_bank.Dtos
         public DateTime DateOfDonation { get; set; }
         public DonationType type { get; set; }
 
+        public bool? IsExpire {  get; set; }
         public int DonationAmout { get; set; }
         public int BloodBankID { get; set; }
         public int BloodID { get; set; }

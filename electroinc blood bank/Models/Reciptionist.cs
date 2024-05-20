@@ -8,7 +8,7 @@ namespace electroinc_blood_bank.Models
         public string EmployeeName { get; set; }
 
         [Required]
-        [StringLength(11)]
+        [StringLength(13)]
         public string Phone { get; set; }
 
         public Guid Password { get; set; }  

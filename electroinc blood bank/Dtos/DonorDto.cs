@@ -17,6 +17,6 @@ namespace electroinc_blood_bank.Dtos
         public string Phone { get; set; }
 
         public int BloodID { get; set; }
-        //    public BloodRh bloodRh { get; set; }
+        public string? bloodRh { get; set; }
     }
 }

@@ -143,7 +143,7 @@ namespace electroinc_blood_bank.Controllers
 
 
 
-            [HttpGet]
+        [HttpGet]
         [Route("GetAvaliableBloodQuantity")]
         public async Task<IActionResult> GetAvaliableBloodQuantity(int id)
         {
@@ -151,6 +151,38 @@ namespace electroinc_blood_bank.Controllers
             {
                 var BloodQuantity = await _Conntext.BloodQuantities.Where(e=>e.BloodBankID==id).ToListAsync();
                 return Ok(_mapper.Map<List<BloodQuantityDto>>(BloodQuantity));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+        [HttpGet]
+        [Route("GetBloodExpiration")]
+        public async Task<IActionResult> GetBloodExpiration(int id)
+        {
+            try
+            {
+                var BloodQuantityLst =_mapper.Map<List<DonorHistoryDto>>( await _Conntext.DonorsHistory.ToListAsync());
+                
+
+                foreach(var b in BloodQuantityLst)
+                {
+                    if((b.DateOfDonation - DateTime.Now).Days >= 42)
+                    {
+                        b.IsExpire = true;
+                    }
+                    else if ((b.DateOfDonation - DateTime.Now).Days < 42)
+                    {
+                        b.IsExpire = false;
+                    }
+                   
+
+                }
+                return Ok(_mapper.Map<List<BloodQuantityDto>>(BloodQuantityLst));
             }
             catch (Exception ex)
             {

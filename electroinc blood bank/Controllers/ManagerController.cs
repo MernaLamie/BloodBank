@@ -23,12 +23,22 @@ namespace electroinc_blood_bank.Controllers
 
         // GET: api/<ManagerController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string? nameEn, string? nameAr)
         {
             try
             {
                 var ManagerLst = await _Conntext.Managers.ToListAsync();
-                return Ok(_mapper.Map<List<Manager>>(ManagerLst));
+                if (!string.IsNullOrEmpty(nameEn))
+                {
+                    ManagerLst = ManagerLst.Where(e => e.nameEn.Contains(nameEn)).ToList();
+                }
+                if (!string.IsNullOrEmpty(nameAr))
+                {
+                    ManagerLst = ManagerLst.Where(e => e.nameAr.Contains(nameAr)).ToList();
+                }
+
+
+                return Ok(_mapper.Map<List<ManagerDto>>(ManagerLst));
             }
             catch (Exception ex)
             {

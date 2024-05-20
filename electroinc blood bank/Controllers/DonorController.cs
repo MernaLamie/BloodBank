@@ -4,6 +4,7 @@ using electroinc_blood_bank.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace electroinc_blood_bank.Controllers
 {
@@ -28,17 +29,24 @@ namespace electroinc_blood_bank.Controllers
             try
             {
                 var DonorLst = await _Conntext.Donors.ToListAsync();
+                var mappingDonerLst = _mapper.Map < List < DonorDto >> (DonorLst);
+                foreach (var D in mappingDonerLst)
+                {
+                    var blood= await _Conntext.Bloods.FindAsync(D.BloodID);
+                    D.bloodRh = blood.BloodRhEn.ToString();
+                }
+
                 if (!string.IsNullOrEmpty(nameEn))
                 {
-                    DonorLst =DonorLst.Where(e => e.NameEn.Contains(nameEn)).ToList();
+                    mappingDonerLst = mappingDonerLst.Where(e => e.NameEn.Contains(nameEn)).ToList();
                 }
                 if (!string.IsNullOrEmpty(nameAr))
                 {
-                    DonorLst =DonorLst.Where(e => e.NameAr.Contains(nameAr)).ToList();
+                    mappingDonerLst = mappingDonerLst.Where(e => e.NameAr.Contains(nameAr)).ToList();
                 }
               
         
-                  return Ok(_mapper.Map<List<DonorDto>>(DonorLst));
+                  return Ok(mappingDonerLst);
             }
             catch (Exception ex)
             {
@@ -57,8 +65,9 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var Donor = await _Conntext.Donors.FindAsync(id);
+                var Donor = await _Conntext.Donors.FindAsync(id);                
                 return Ok(_mapper.Map<DonorDto>(Donor));
+
             }
             catch (Exception ex)
             {

@@ -19,7 +19,7 @@ namespace electroinc_blood_bank.Models
         public Gender Gender  { get; set; }
 
         [Required]
-        [StringLength(11)]
+        [StringLength(13)]
         public string Phone { get; set; }
 
         public int BloodID { get;set; }
