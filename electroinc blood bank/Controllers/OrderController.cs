@@ -23,11 +23,19 @@ namespace electroinc_blood_bank.Controllers
 
         // GET: api/<OrderController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int? orderFor)
         {
             try
             {
                 var OrderLst = await _Conntext.Orders.ToListAsync();
+                if (orderFor == 1)
+                {
+                    OrderLst=OrderLst.Where(e=>e.orderFor ==OrderFor.Patient).ToList();
+                }
+                else if(orderFor== 2) {
+                    OrderLst=OrderLst.Where(e=>e.orderFor ==OrderFor.Hospital ).ToList();
+
+                }
                 return Ok(_mapper.Map<List<Orders>>(OrderLst));
             }
             catch (Exception ex)
