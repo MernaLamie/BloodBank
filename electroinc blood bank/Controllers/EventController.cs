@@ -10,35 +10,35 @@ namespace electroinc_blood_bank.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class EventController : ControllerBase
     {
         private readonly ApplicationDBContext _Conntext;
         private readonly IMapper _mapper;
 
-        public OrderController(ApplicationDBContext Context, IMapper mapper)
+        public EventController(ApplicationDBContext Context, IMapper mapper)
         {
             _Conntext = Context;
             _mapper = mapper;
         }
 
-        // GET: api/<OrderController>
+        // GET: api/<EventController>
         [HttpGet]
-        public async Task<IActionResult> Get(int? orderFor)
+        public async Task<IActionResult> Get(string? nameEn, string? nameAr)
         {
             try
             {
-                var OrderLst = await _Conntext.Orders.ToListAsync();
-                if (orderFor == 1)
+                var EventLst = await _Conntext.Events.ToListAsync();
+                if (!string.IsNullOrEmpty(nameEn))
                 {
-                    OrderLst=OrderLst.Where(e=>e.orderFor ==OrderFor.Patient).ToList();
-                    
+                    EventLst = EventLst.Where(e => e.titleEn.Contains(nameEn)).ToList();
                 }
-                else if(orderFor== 2) {
-                    OrderLst=OrderLst.Where(e=>e.orderFor ==OrderFor.Hospital ).ToList();
+                if (!string.IsNullOrEmpty(nameAr))
+                {
+                    EventLst = EventLst.Where(e => e.titleAr.Contains(nameAr)).ToList();
+                }
 
-                }
-              
-                return Ok(_mapper.Map<List<OrderDto>>(OrderLst));
+
+                return Ok(_mapper.Map<List<EventDto>>(EventLst));
             }
             catch (Exception ex)
             {
@@ -47,14 +47,14 @@ namespace electroinc_blood_bank.Controllers
 
         }
 
-        // GET api/<OrderController>/5
+        // GET api/<EventController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var Order = await _Conntext.Orders.FindAsync(id);
-                return Ok(_mapper.Map<Orders>(Order));
+                var Event = await _Conntext.Events.FindAsync(id);
+                return Ok(_mapper.Map<Event>(Event));
             }
             catch (Exception ex)
             {
@@ -62,28 +62,18 @@ namespace electroinc_blood_bank.Controllers
             }
         }
 
-        // POST api/<OrderController>
+        // POST api/<EventController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrderDto _OrderDto)
+        public async Task<IActionResult> Post([FromBody] EventDto _EventDto)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var Order = _mapper.Map<Orders>(_OrderDto);
-                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == Order.BloodID&&e.type==Order.type).Select(e => e.quantity).FirstOrDefaultAsync();
-
-                    if (Order.BloodAmount > AmountInBank)
-                    {
-                        Order.Avaliable=false;
-                    }
-                    else
-                    {
-                        Order.Avaliable=true;
-                    }
-                    await _Conntext.Orders.AddAsync(Order);
+                    var Event = _mapper.Map<Event>(_EventDto);
+                    await _Conntext.Events.AddAsync(Event);
                     await _Conntext.SaveChangesAsync();
-                    return Ok(Order);
+                    return Ok(Event);
                 }
                 else
                 {
@@ -96,22 +86,18 @@ namespace electroinc_blood_bank.Controllers
             }
         }
 
-
-
-
-
-        // PUT api/<OrderController>/5
+        // PUT api/<EventController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] OrderDto _updatedOrder)
+        public async Task<IActionResult> Put([FromBody] EventDto _updatedEvent)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var UpdatedOrder = _mapper.Map<Orders>(_updatedOrder);
-                    _Conntext.Update(UpdatedOrder);
+                    var UpdatedEvent = _mapper.Map<Event>(_updatedEvent);
+                    _Conntext.Update(UpdatedEvent);
                     await _Conntext.SaveChangesAsync();
-                    return Ok(_updatedOrder);
+                    return Ok(_updatedEvent);
                 }
                 else
                 {
@@ -124,7 +110,7 @@ namespace electroinc_blood_bank.Controllers
             }
         }
 
-        // DELETE api/<OrderController>/5
+        // DELETE api/<EventController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -132,8 +118,8 @@ namespace electroinc_blood_bank.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var DeletedOrder = await _Conntext.Orders.FindAsync(id);
-                    _Conntext.Remove(DeletedOrder);
+                    var DeletedEvent = await _Conntext.Events.FindAsync(id);
+                    _Conntext.Remove(DeletedEvent);
                     await _Conntext.SaveChangesAsync();
                     return Ok("");
                 }
@@ -150,3 +136,5 @@ namespace electroinc_blood_bank.Controllers
         }
     }
 }
+
+    

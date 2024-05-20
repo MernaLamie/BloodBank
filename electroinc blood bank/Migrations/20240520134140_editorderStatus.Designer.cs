@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using electroinc_blood_bank.Models;
 
@@ -11,9 +12,11 @@ using electroinc_blood_bank.Models;
 namespace electroinc_blood_bank.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240520134140_editorderStatus")]
+    partial class editorderStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,54 +172,6 @@ namespace electroinc_blood_bank.Migrations
                     b.ToTable("DonorsHistory");
                 });
 
-            modelBuilder.Entity("electroinc_blood_bank.Models.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AddressAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AddressEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BloodBankId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("titleAr")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("titleEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodBankId");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("electroinc_blood_bank.Models.Hospital", b =>
                 {
                     b.Property<int>("ID")
@@ -304,8 +259,9 @@ namespace electroinc_blood_bank.Migrations
                     b.Property<int>("ReciptionistID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("orderFor")
                         .HasColumnType("int");
@@ -449,17 +405,6 @@ namespace electroinc_blood_bank.Migrations
                     b.Navigation("BloodBank");
 
                     b.Navigation("Donor");
-                });
-
-            modelBuilder.Entity("electroinc_blood_bank.Models.Event", b =>
-                {
-                    b.HasOne("electroinc_blood_bank.Models.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BloodBank");
                 });
 
             modelBuilder.Entity("electroinc_blood_bank.Models.Manager", b =>

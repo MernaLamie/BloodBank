@@ -23,7 +23,7 @@ namespace electroinc_blood_bank.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+         
             base.OnModelCreating(modelBuilder);
         }
 
@@ -36,6 +36,7 @@ namespace electroinc_blood_bank.Models
         public virtual DbSet<BloodQuantity> BloodQuantities { get; set; } = null;
         public virtual DbSet<BloodBank> BloodBanks { get; set; }
         public virtual DbSet<Patient> Patients { get; set; } = null;
+        public virtual DbSet<Event> Events { get; set; } = null;
         public virtual DbSet<Manager> Managers { get; set; } = null;
 
 
