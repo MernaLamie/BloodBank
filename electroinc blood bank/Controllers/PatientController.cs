@@ -28,17 +28,24 @@ namespace electroinc_blood_bank.Controllers
             try
             {
                 var PatientLst = await _Conntext.Patients.ToListAsync();
+                var mappingPatientLst = _mapper.Map<List<PatientDto>>(PatientLst);
+                foreach (var D in mappingPatientLst)
+                {
+                    var blood = await _Conntext.Bloods.FindAsync(D.BloodID);
+                    D.bloodRh = blood.BloodRhEn.ToString();
+                }
+
                 if (!string.IsNullOrEmpty(nameEn))
                 {
-                    PatientLst = PatientLst.Where(e => e.NameEn.Contains(nameEn)).ToList();
+                    mappingPatientLst  = mappingPatientLst .Where(e => e.NameEn.Contains(nameEn)).ToList();
                 }
                 if (!string.IsNullOrEmpty(nameAr))
                 {
-                    PatientLst = PatientLst.Where(e => e.NameAr.Contains(nameAr)).ToList();
+                    mappingPatientLst  = mappingPatientLst .Where(e => e.NameAr.Contains(nameAr)).ToList();
                 }
 
 
-                return Ok(_mapper.Map<List<PatientDto>>(PatientLst));
+                return Ok(mappingPatientLst );
             }
             catch (Exception ex)
             {
