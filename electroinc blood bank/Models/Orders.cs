@@ -10,8 +10,6 @@ namespace electroinc_blood_bank.Models
         public int BloodAmount { get; set;}
         public DateTime OrderAt { get; set; }
         public int BloodID { get; set; }
-
-     
         public  Status Status  {get; set; }
         public int ReciptionistID { get; set; }
         public OrderFor orderFor { get; set; } 

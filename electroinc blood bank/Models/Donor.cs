@@ -5,9 +5,9 @@ namespace electroinc_blood_bank.Models
     public class Donor
     {
         public int ID { get; set; }
+         
         [Required]
         public string NameEn { get; set; }
-
 
         [Required]
         public string NameAr { get; set; }

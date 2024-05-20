@@ -27,17 +27,17 @@ namespace electroinc_blood_bank.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public virtual DbSet<Donor> Donors { get; set; } = null;
-        public virtual DbSet<DonorHistory> DonorsHistory { get; set; } = null;
-        public virtual DbSet<Hospital> Hospitals { get; set; } = null;
-        public virtual DbSet<Reciptionist> Reciptionists { get; set; } = null;
-        public virtual DbSet<Blood> Bloods { get; set; } = null;
-        public virtual DbSet<Orders> Orders { get; set; } = null;
-        public virtual DbSet<BloodQuantity> BloodQuantities { get; set; } = null;
+        public virtual DbSet<Donor> Donors { get; set; } 
+        public virtual DbSet<DonorHistory> DonorsHistory { get; set; }
+        public virtual DbSet<Hospital> Hospitals { get; set; }
+        public virtual DbSet<Reciptionist> Reciptionists { get; set; }
+        public virtual DbSet<Blood> Bloods { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<BloodQuantity> BloodQuantities { get; set; } 
         public virtual DbSet<BloodBank> BloodBanks { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; } = null;
-        public virtual DbSet<Event> Events { get; set; } = null;
-        public virtual DbSet<Manager> Managers { get; set; } = null;
+        public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Event> Events { get; set; } 
+        public virtual DbSet<Manager> Managers { get; set; } 
 
 
 

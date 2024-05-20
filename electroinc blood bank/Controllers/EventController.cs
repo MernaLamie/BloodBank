@@ -64,7 +64,7 @@ namespace electroinc_blood_bank.Controllers
 
         // POST api/<EventController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] EventDto _EventDto)
+        public async Task<IActionResult> Post([FromForm] EventDto _EventDto)
         {
             try
             {
