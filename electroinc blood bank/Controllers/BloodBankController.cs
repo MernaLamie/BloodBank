@@ -184,14 +184,11 @@ namespace electroinc_blood_bank.Controllers
                     {
                         b.IsExpire = true;
                     }
-                    else if ((b.DateOfDonation - DateTime.Now).Days < 42)
-                    {
-                        b.IsExpire = false;
-                    }
+                   
                    
 
                 }
-                return Ok(BloodQuantityLst);
+                return Ok(BloodQuantityLst.Where(e=>e.IsExpire==true).ToList());
             }
             catch (Exception ex)
             {
