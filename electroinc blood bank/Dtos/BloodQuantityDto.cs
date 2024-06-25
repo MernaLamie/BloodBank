@@ -9,6 +9,7 @@ namespace electroinc_blood_bank.Dtos
         public DonationType type { get; set; }
         public int quantity { get; set; }
         public int BloodID { get; set; }
+        public string? bloodRh { get; set; }
         public int BloodBankID { get; set; }
      
     }

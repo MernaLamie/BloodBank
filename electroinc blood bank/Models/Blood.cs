@@ -11,25 +11,25 @@
 
     public enum BloodRh
     {
-       A_Positive,
-       A_Negative,
-       B_positive,
-       B_negative,
-       O_positive,
-       O_negative,
-       AB_positive,
-       AB_negative,
+       A_Positive=1,
+       A_Negative=2,
+       B_positive=3,
+       B_negative=4,
+       O_positive=5,
+       O_negative=6,
+       AB_positive=7,
+       AB_negative=8,
     }
 
      public enum BloodRhAr
     {
-       A_Positive,
-       A_Negative,
-       B_positive,
-       B_negative,
-       O_positive,
-       O_negative,
-       AB_positive,
-       AB_negative,
+        A_Positive = 1,
+        A_Negative = 2,
+        B_positive = 3,
+        B_negative = 4,
+        O_positive = 5,
+        O_negative = 6,
+        AB_positive = 7,
+        AB_negative = 8,
     }
 }

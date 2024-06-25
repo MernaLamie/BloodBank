@@ -65,8 +65,9 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var Donor = await _Conntext.Donors.FindAsync(id);                
-                return Ok(_mapper.Map<DonorDto>(Donor));
+                var Donor = _mapper.Map<DonorDto>(await _Conntext.Donors.FindAsync(id));
+                Donor.bloodRh = (await _Conntext.Bloods.FindAsync(Donor.BloodID)).BloodRhEn.ToString();
+                return Ok(Donor);
 
             }
             catch (Exception ex)

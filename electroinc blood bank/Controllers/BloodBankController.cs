@@ -149,8 +149,14 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var BloodQuantity = await _Conntext.BloodQuantities.Where(e=>e.BloodBankID==id).ToListAsync();
-                return Ok(_mapper.Map<List<BloodQuantityDto>>(BloodQuantity));
+                var BloodQuantity = _mapper.Map<List<BloodQuantityDto>>(await _Conntext.BloodQuantities.Where(e=>e.BloodBankID==id).ToListAsync());
+
+                foreach (var d in BloodQuantity)
+                {
+                    d.bloodRh = (await _Conntext.Bloods.FindAsync(d.BloodID)).BloodRhEn.ToString();
+                }
+
+                return Ok(BloodQuantity);
             }
             catch (Exception ex)
             {
@@ -171,7 +177,10 @@ namespace electroinc_blood_bank.Controllers
 
                 foreach(var b in BloodQuantityLst)
                 {
-                    if((b.DateOfDonation - DateTime.Now).Days >= 42)
+                    b.bloodRh = (await _Conntext.Bloods.FindAsync(b.BloodID)).BloodRhEn.ToString();
+                    
+
+                    if ((b.DateOfDonation - DateTime.Now).Days >= 42)
                     {
                         b.IsExpire = true;
                     }
