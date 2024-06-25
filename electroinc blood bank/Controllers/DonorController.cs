@@ -141,6 +141,7 @@ namespace electroinc_blood_bank.Controllers
             try
             {
                 var Donor = await _Conntext.DonorsHistory.Where(e=>e.DonorID==id).ToListAsync();
+
                 return Ok(_mapper.Map<List<DonorHistoryDto>>(Donor));
             }
             catch (Exception ex)

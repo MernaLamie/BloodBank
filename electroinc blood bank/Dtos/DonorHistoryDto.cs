@@ -12,6 +12,9 @@ namespace electroinc_blood_bank.Dtos
         public int DonationAmout { get; set; }
         public int BloodBankID { get; set; }
         public int BloodID { get; set; }
+        public string? bloodRh { get; set; }
         public int DonorID { get; set; }
+
+
     }
 }

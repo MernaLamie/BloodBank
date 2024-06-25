@@ -16,8 +16,12 @@ namespace electroinc_blood_bank.Dtos;
    
     
     
+   
+
+    public string? Image { get;  set; }
+
     private IFormFile _file;
-    public IFormFile eventImage
+    public IFormFile? eventImage
     {
         get => _file;
         set
@@ -28,9 +32,11 @@ namespace electroinc_blood_bank.Dtos;
                 Image = Upload.UploadImage(value);
 
             }
+            else
+            {
+                Image = Image;
+            }
         }
     }
-
-    public string? Image { get; private set; }
     public int BloodBankId { get; set; }
 }

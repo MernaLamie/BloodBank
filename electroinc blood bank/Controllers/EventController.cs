@@ -88,7 +88,7 @@ namespace electroinc_blood_bank.Controllers
 
         // PUT api/<EventController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] EventDto _updatedEvent)
+        public async Task<IActionResult> Put([FromForm] EventDto _updatedEvent)
         {
             try
             {
@@ -97,7 +97,8 @@ namespace electroinc_blood_bank.Controllers
                     var UpdatedEvent = _mapper.Map<Event>(_updatedEvent);
                     _Conntext.Update(UpdatedEvent);
                     await _Conntext.SaveChangesAsync();
-                    return Ok(_updatedEvent);
+                  var Event = await _Conntext.Events.FindAsync(UpdatedEvent.Id);
+                    return Ok(_mapper.Map<EventDto>(Event));
                 }
                 else
                 {
