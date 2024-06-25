@@ -26,7 +26,7 @@ namespace electroinc_blood_bank.Models
          
             base.OnModelCreating(modelBuilder);
         }
-
+        public virtual DbSet<ContactUs> ContactUs { get; set; }
         public virtual DbSet<Donor> Donors { get; set; } 
         public virtual DbSet<DonorHistory> DonorsHistory { get; set; }
         public virtual DbSet<Hospital> Hospitals { get; set; }

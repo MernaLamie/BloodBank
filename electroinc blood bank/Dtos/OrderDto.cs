@@ -11,9 +11,12 @@ namespace electroinc_blood_bank.Dtos
         public DonationType type { get; set; }
         public OrderFor orderFor { get; set; }
         public int orderForID { get; set; }
+        public Decimal Cost { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Name { get; set; }
         public int BloodID { get; set; }
         public bool Avaliable { get; set; }
-
+    
         public Status Status { get; set; }
         public int ReciptionistID { get; set; }
         

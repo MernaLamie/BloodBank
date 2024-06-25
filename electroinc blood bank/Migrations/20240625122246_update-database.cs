@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace electroinc_blood_bank.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class updatedatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,22 @@ namespace electroinc_blood_bank.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bloods", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContactUs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactUs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +235,9 @@ namespace electroinc_blood_bank.Migrations
                     orderFor = table.Column<int>(type: "int", nullable: false),
                     orderForID = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avaliable = table.Column<bool>(type: "bit", nullable: false),
                     HospitalID = table.Column<int>(type: "int", nullable: true)
                 },
@@ -277,7 +296,7 @@ namespace electroinc_blood_bank.Migrations
                         column: x => x.DonorID,
                         principalTable: "Donors",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -351,6 +370,9 @@ namespace electroinc_blood_bank.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BloodQuantities");
+
+            migrationBuilder.DropTable(
+                name: "ContactUs");
 
             migrationBuilder.DropTable(
                 name: "DonorsHistory");

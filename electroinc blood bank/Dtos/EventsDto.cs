@@ -31,6 +31,6 @@ namespace electroinc_blood_bank.Dtos;
         }
     }
 
-    public string Image { get; private set; }
+    public string? Image { get; private set; }
     public int BloodBankId { get; set; }
 }

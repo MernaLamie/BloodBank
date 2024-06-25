@@ -15,9 +15,12 @@ namespace electroinc_blood_bank.Models
         public OrderFor orderFor { get; set; } 
         public int orderForID { get; set; }
         public DonationType type { get; set; }
+        public Decimal Cost { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Name { get; set; }
 
         //string or image
-      //  public string Reason { get; set; }
+        //  public string Reason { get; set; }
         public bool Avaliable { get; set; }
         public virtual Blood Blood { get; set; }
         public virtual Reciptionist Reciptionist { get; set; }
