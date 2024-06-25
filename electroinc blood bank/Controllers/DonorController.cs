@@ -140,9 +140,13 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var Donor = await _Conntext.DonorsHistory.Where(e=>e.DonorID==id).ToListAsync();
+                var DonorHistory = _mapper.Map<List<DonorHistoryDto>>(await _Conntext.DonorsHistory.Where(e=>e.DonorID==id).ToListAsync());
+                foreach(var d in DonorHistory)
+                {
+                    d.bloodRh = (await _Conntext.Bloods.FindAsync(d.BloodID)).BloodRhEn.ToString(); 
+                }
 
-                return Ok(_mapper.Map<List<DonorHistoryDto>>(Donor));
+                return Ok(DonorHistory);
             }
             catch (Exception ex)
             {
