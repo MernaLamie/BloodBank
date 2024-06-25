@@ -172,7 +172,7 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var BloodQuantityLst =_mapper.Map<List<DonorHistoryDto>>( await _Conntext.DonorsHistory.ToListAsync());
+                var BloodQuantityLst =_mapper.Map<List<DonorHistoryDto>>(await _Conntext.DonorsHistory.ToListAsync());
                 
 
                 foreach(var b in BloodQuantityLst)
@@ -191,7 +191,7 @@ namespace electroinc_blood_bank.Controllers
                    
 
                 }
-                return Ok(_mapper.Map<List<BloodQuantityDto>>(BloodQuantityLst));
+                return Ok(BloodQuantityLst);
             }
             catch (Exception ex)
             {
