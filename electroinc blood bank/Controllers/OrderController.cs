@@ -34,7 +34,7 @@ namespace electroinc_blood_bank.Controllers
                     o.bloodRh = (await _Conntext.Bloods.FindAsync(o.BloodID)).BloodRhEn.ToString();
 
 
-                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == o.BloodID && e.type == o.type).Select(e => e.quantity).FirstOrDefaultAsync();
+                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == o.BloodID && e.type == o.type).Select(e => e.quantity).SumAsync();
 
                     if (o.BloodAmount > AmountInBank)
                     {
@@ -106,7 +106,7 @@ namespace electroinc_blood_bank.Controllers
                 if (ModelState.IsValid)
                 {
                     var Order = _mapper.Map<Orders>(_OrderDto);
-                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == Order.BloodID&&e.type==Order.type).Select(e => e.quantity).FirstOrDefaultAsync();
+                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == Order.BloodID&&e.type==Order.type).Select(e => e.quantity).SumAsync();
 
                     if (Order.BloodAmount > AmountInBank)
                     {
