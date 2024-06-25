@@ -28,6 +28,21 @@ namespace electroinc_blood_bank.Controllers
             try
             {
                 var OrderLst = _mapper.Map<List<OrderDto>>(await _Conntext.Orders.ToListAsync());
+
+               foreach(var o in OrderLst)
+                {
+                    var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == o.BloodID && e.type == o.type).Select(e => e.quantity).FirstOrDefaultAsync();
+
+                    if (o.BloodAmount > AmountInBank)
+                    {
+                        o.Avaliable = false;
+                    }
+                    else
+                    {
+                        o.Avaliable = true;
+                    }
+                }
+
                 //foreach(var o in OrderLst)
                 //{
                 //    if (o.orderFor == OrderFor.Patient)
