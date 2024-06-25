@@ -8,6 +8,8 @@ namespace electroinc_blood_bank.Models
         public string NameEn { get; set; }
         public string NameAr { get; set; }
 
+        [EmailAddress]
+        public string Email { get; set; }
         public string Location { get; set; }
 
         [Required]

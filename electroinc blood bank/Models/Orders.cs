@@ -16,6 +16,8 @@ namespace electroinc_blood_bank.Models
         public int orderForID { get; set; }
         public DonationType type { get; set; }
 
+        //string or image
+      //  public string Reason { get; set; }
         public bool Avaliable { get; set; }
         public virtual Blood Blood { get; set; }
         public virtual Reciptionist Reciptionist { get; set; }

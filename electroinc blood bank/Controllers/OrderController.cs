@@ -27,10 +27,27 @@ namespace electroinc_blood_bank.Controllers
         {
             try
             {
-                var OrderLst = await _Conntext.Orders.ToListAsync();
+                var OrderLst = _mapper.Map<List<ReturnedOrderDto>>(await _Conntext.Orders.ToListAsync());
+                foreach(var o in OrderLst)
+                {
+                    if (o.orderFor == OrderFor.Patient)
+                    {
+                        var p = await _Conntext.Patients.FindAsync(o.orderForID);
+                        o.Name = p.NameEn;
+                        o.PhoneNumber = p.Phone;
+                    }
+                    else
+                    {
+                        var p = await _Conntext.Hospitals.FindAsync(o.orderForID);
+                        o.Name = p.NameEn;
+                        o.PhoneNumber = p.Phone;
+                    }
+                }
+
                 if (orderFor == 1)
                 {
-                    OrderLst=OrderLst.Where(e=>e.orderFor ==OrderFor.Patient).ToList();
+                    OrderLst= OrderLst.Where(e=>e.orderFor ==OrderFor.Patient).ToList();
+
                     
                 }
                 else if(orderFor== 2) {
@@ -38,7 +55,7 @@ namespace electroinc_blood_bank.Controllers
 
                 }
               
-                return Ok(_mapper.Map<List<OrderDto>>(OrderLst));
+                return Ok(OrderLst);
             }
             catch (Exception ex)
             {

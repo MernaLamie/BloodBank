@@ -49,7 +49,7 @@ namespace electroinc_blood_bank.Controllers
 
         // GET api/<EventController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async  Task<IActionResult> Get(int id)
         {
             try
             {

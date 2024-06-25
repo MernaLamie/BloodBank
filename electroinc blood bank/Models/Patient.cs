@@ -22,6 +22,8 @@ namespace electroinc_blood_bank.Models
         [StringLength(13)]
         public string Phone { get; set; }
 
+
+
         public int BloodID { get;set; }
         public virtual Blood Blood { get; set; }
 

@@ -5,11 +5,8 @@
         public int Id { get; set; } 
         public string titleEn { get; set; }
         public string? titleAr { get; set; }
-
-
         public string DescriptionEn { get; set; }
         public string? DescriptionAr { get; set; }
-
         public string AddressEn { get; set; }
         public string? AddressAr { get; set; }
 
