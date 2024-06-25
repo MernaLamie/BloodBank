@@ -21,7 +21,7 @@ namespace electroinc_blood_bank.Migrations
 
           //migrationBuilder.InsertData("BloodBanks", columns: new[] { "NameEn", "NameAr", "Address" }, values: new object[] { "Central Blood Bank", "بنك الدم الرئيسي", "شارع المستشفي , خلف جامع المطافي" });
           
-          // migrationBuilder.InsertData("Reciptionists", columns: new[] { "EmployeeName", "Phone","Password","BloodBankID" }, values: new object[] { "Admin", "01234567891","Admin123456","1" });
+           migrationBuilder.InsertData("Reciptionists", columns: new[] { "EmployeeName", "Phone","Password","BloodBankID" }, values: new object[] { "Admin", "01234567891", "AQAAAAIAAYagAAAAEC4Yr45k9R0MYc0eHAaC4AcEen7OlRaRC+hRb/H7fGnz/Uw3a3TxDErr2txXPOY5Kw==", "1" });
 
 
 

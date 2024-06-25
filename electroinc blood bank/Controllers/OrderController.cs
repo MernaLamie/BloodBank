@@ -143,10 +143,25 @@ namespace electroinc_blood_bank.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var UpdatedOrder = _mapper.Map<Orders>(_updatedOrder);
-                    _Conntext.Update(UpdatedOrder);
-                    await _Conntext.SaveChangesAsync();
-                    return Ok(_updatedOrder);
+                    if (_updatedOrder.Avaliable == true)
+                    {
+                        var UpdatedOrder = _mapper.Map<Orders>(_updatedOrder);
+                        _Conntext.Update(UpdatedOrder);
+                        await _Conntext.SaveChangesAsync();
+                        if (UpdatedOrder.Status == Status.delivered)
+                        {
+                            var bloodtype = await _Conntext.BloodQuantities.Where(e => e.BloodID == UpdatedOrder.BloodID && e.type == UpdatedOrder.type).FirstOrDefaultAsync();
+                            bloodtype.quantity = bloodtype.quantity - UpdatedOrder.BloodAmount;
+                            _Conntext.BloodQuantities.Update(bloodtype);
+                            await _Conntext.SaveChangesAsync();
+                        }
+                       
+                        return Ok(_updatedOrder);
+                    }
+                    else
+                    {
+                        return UnprocessableEntity("Sorry the amount of blood not Avaliable");
+                    }
                 }
                 else
                 {
