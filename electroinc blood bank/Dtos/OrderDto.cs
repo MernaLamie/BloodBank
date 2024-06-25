@@ -16,7 +16,7 @@ namespace electroinc_blood_bank.Dtos
         public string Name { get; set; }
         public int BloodID { get; set; }
         public bool Avaliable { get; set; }
-    
+    public string? bloodRh { get; set; }
         public Status Status { get; set; }
         public int ReciptionistID { get; set; }
         

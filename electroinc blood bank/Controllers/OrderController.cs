@@ -31,6 +31,9 @@ namespace electroinc_blood_bank.Controllers
 
                foreach(var o in OrderLst)
                 {
+                    o.bloodRh = (await _Conntext.Bloods.FindAsync(o.BloodID)).BloodRhEn.ToString();
+
+
                     var AmountInBank = await _Conntext.BloodQuantities.Where(e => e.BloodID == o.BloodID && e.type == o.type).Select(e => e.quantity).FirstOrDefaultAsync();
 
                     if (o.BloodAmount > AmountInBank)
